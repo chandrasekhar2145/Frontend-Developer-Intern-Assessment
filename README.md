@@ -1,3 +1,16 @@
+#Errors Raised
+
+I have attempted to troubleshoot the errors in my code multiple times, using various methods, but unfortunately, they persist. The issues are preventing the correct display of output, which is a critical component of my project. Despite my best efforts, the errors have not been resolved, and I am in need of assistance to address this matter.
+
+I have reviewed the code line by line and checked for syntax errors, but the source of the problem remains unclear. I have also consulted relevant documentation and forums, but the answers provided have not been helpful in resolving the issue.
+
+I am eager to find a solution to this problem as soon as possible, as the deadline for this project is quickly approaching. I believe that working together, we can identify the root cause of the errors and take the necessary steps to rectify them.
+
+
+
+
+
+
 # Pioneer Labs Frontend Assessment Reference Doc
 
 ### Task 1: Create a Side Navigation Bar
