@@ -1,70 +1,156 @@
-# Getting Started with Create React App
+# Pioneer Labs Frontend Assessment Reference Doc
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Task 1: Create a Side Navigation Bar
 
-## Available Scripts
+**Approach:**
 
-In the project directory, you can run:
+1. Use React JS with the `react-router-dom` library for routing and `CSS` for styling.
+2. Create a component for the side navigation bar using React class components.
+3. Implement responsiveness using media queries in CSS to collapse the navigation into a hamburger menu on smaller screens.
+4. Use React Router to handle navigation between different pages and highlight the active navigation item.
 
-### `npm start`
+### Task 2: Graph Population Data
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**Approach:**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. Utilize React JS with the `recharts` library for creating graphs.
+2. Create a component to fetch population data from the provided API using React class lifecycle methods.
+3. Use the `fetch` API or Axios to fetch data asynchronously.
+4. Use Recharts to create a graph representing the population data with appropriate labels, legends, and axis titles.
 
-### `npm test`
+### Task 3: Display Cryptocurrency Prices
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Approach:**
 
-### `npm run build`
+1. Use React JS to create a component for fetching and displaying cryptocurrency prices.
+2. Fetch data from the provided API asynchronously using React class lifecycle methods.
+3. Design visually appealing cards using CSS or a UI library like Material-UI.
+4. Display prices for at least two cryptocurrencies, such as Bitcoin and Ethereum, in the cards.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### **Web3.js Integration (for Task 4)**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To use Web3.js for interacting with Ethereum and MetaMask, you need to follow these steps:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. **Install Web3.js**: If you're using npm, you can install Web3.js by running:
+    
+    ```
+    npm install web3
+    ```
+    
+2. **Import Web3.js**: In your JavaScript file, import Web3.js at the top:
+    
+    ```jsx
+    import Web3 from 'web3';
+    ```
+    
+3. **Initialize Web3**: Create a new instance of Web3 and connect it to the Ethereum provider (MetaMask):
+    
+    ```jsx
+    if (window.ethereum) {
+        const web3 = new Web3(window.ethereum);
+        // Now you can use 'web3' to interact with Ethereum
+    } else {
+        // MetaMask not detected, handle the case accordingly
+    }
+    ```
+    
+4. **Interact with Ethereum**: Once Web3 is initialized, you can use its methods to interact with the Ethereum blockchain. For example, to get the current Ethereum network ID:
+    
+    ```jsx
+    const networkId = await web3.eth.net.getId();
+    ```
+    
+5. **Handle User Authorization**: Before making any transactions or reading data from the blockchain, you need to request user authorization using MetaMask:
+    
+    ```jsx
+    try {
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+    } catch (error) {
+        // User denied account access
+    }
+    ```
+    
+6. **Use Ethereum Methods**: You can now use Web3 methods to interact with Ethereum, such as sending transactions, reading data from smart contracts, etc. For example, to get the user's Ethereum address:
+    
+    ```jsx
+    const accounts = await web3.eth.getAccounts();
+    const userAddress = accounts[0];
+    
+    ```
+    
+7. **Handling Events**: You can also listen for events from MetaMask or Ethereum using Web3's event subscription methods:
+    
+    ```jsx
+    window.ethereum.on('accountsChanged', function (accounts) {
+        // Handle account change event
+    });
+    
+    ```
+    
 
-### `npm run eject`
+### Task 4: Integrate MetaMask Wallet (Optional)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**Approach:**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Create a React class component named `MetaMaskIntegration`.
+2. Use the `web3.js` library to interact with MetaMask.
+3. Implement a function to handle the wallet connection process.
+4. Display a button labeled "Connect Wallet" on the UI.
+5. Add an event handler to the button that triggers the wallet connection process when clicked.
+6. Use conditional rendering to display success/error messages based on the connection status.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+**Sample Code:**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```jsx
+import React, { Component } from 'react';
+import Web3 from 'web3';
 
-## Learn More
+class MetaMaskIntegration extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isConnected: false,
+      errorMessage: ''
+    };
+  }
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+  connectWallet = async () => {
+    try {
+      if (window.ethereum) {
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const web3 = new Web3(window.ethereum);
+        // Check if connected
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+          this.setState({ isConnected: true, errorMessage: '' });
+        }
+      } else {
+        this.setState({ isConnected: false, errorMessage: 'MetaMask extension not detected.' });
+      }
+    } catch (error) {
+      this.setState({ isConnected: false, errorMessage: error.message });
+    }
+  };
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  render() {
+    const { isConnected, errorMessage } = this.state;
+    return (
+      <div>
+        <button onClick={this.connectWallet}>Connect Wallet</button>
+        {isConnected && <p>Wallet connected successfully!</p>}
+        {errorMessage && <p>{errorMessage}</p>}
+      </div>
+    );
+  }
+}
 
-### Code Splitting
+export default MetaMaskIntegration;
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```
 
-### Analyzing the Bundle Size
+### **Submission Guidelines:**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Create a GitHub repository containing the code for all tasks.
+2. Include clear instructions on how to run the code locally.
+3. Optionally, provide a hosted link (e.g., GitHub Pages) for interactive viewing.
+4. Ensure code organization, commenting, and adherence to best practices.
