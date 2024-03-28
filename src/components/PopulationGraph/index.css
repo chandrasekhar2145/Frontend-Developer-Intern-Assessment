@@ -1,0 +1,14 @@
+/* App.css */
+.chart-container {
+    position: relative;
+    width: 80%; /* Adjust width as needed */
+    margin: auto; /* Center the chart */
+  }
+  
+  /* Media query for smaller screens */
+  @media only screen and (max-width: 768px) {
+    .chart-container {
+      width: 100%; /* Full width on smaller screens */
+    }
+  }
+  

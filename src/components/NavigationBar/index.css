@@ -1,0 +1,53 @@
+/* App.css */
+.sidebar {
+    height: 100%;
+    width: 200px; /* Adjust width as needed */
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    padding-top: 60px; /* Adjust padding to prevent content from overlapping header */
+  }
+  
+  .sidebar-header {
+    padding: 10px 20px;
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    background-color: #111;
+  }
+  
+  .nav-items {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .nav-items li {
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .nav-items li:hover {
+    background-color: #555;
+  }
+  
+  .nav-items .active {
+    background-color: #666;
+  }
+  
+  /* Media query for smaller screens */
+  @media only screen and (max-width: 768px) {
+    .sidebar {
+      width: 80px; /* Adjust width for collapsed sidebar */
+    }
+    .nav-items li {
+      padding: 10px;
+      text-align: center;
+    }
+    .sidebar-header {
+      display: none; /* Hide header on smaller screens */
+    }
+  }
+  
